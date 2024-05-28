@@ -1,0 +1,51 @@
+/* ------------------------------------------------------- */
+.navbar{
+    border: 1px solid white;
+}
+.admin-sidebar ul{
+    list-style: none;
+    padding:0px !important;
+    margin: 0px !important;
+    }
+    .admin-sidebar .pro-sidebar-layout{
+      height: 100vh;
+      background-color: #16aaac;
+    }
+    .ps-sidebar-container{
+      background-color: #16aaac !important;
+      border: 2px solid #ffffff ;
+    }
+    .navbar{
+      background-color: #9febec !important;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    
+    }
+    .header-table{
+      background-color: #16aaac !important;
+      color: white;
+    }
+   
+    .active
+    {
+      background-color: white;
+      border: 1px solid #16aaac;
+      color: #16aaac !important;
+    }
+    
+    .admin-sidebar a{
+      color: white ;
+      padding: 13px 3px;
+      display: block !important;
+    
+    }
+    
+    @media screen and (max-width: 768px) {
+    .navbar {
+      padding: 10px; 
+    }
+    }
+
+    
+    /* ------------------------------------------------------- */
