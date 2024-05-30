@@ -10,7 +10,7 @@ import Destination from "./pages/Destination";
 import AdminHome from "./pages/AdminHome";
 import Booking from "./pages/Booking";
 import Packages from "./pages/Packages";
-import { Contactpage } from "./pages/Contactpage";
+import Contactpage from "./pages/Contactpage";
 import UserDetail from "./pages/UserDetail";
 import Protected from "./components/Protected";
 import AddPackage from "./components/AddPackage";

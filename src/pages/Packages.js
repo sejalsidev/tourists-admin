@@ -1,45 +1,81 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { packageDetail } from "../servicer/package";
 import Button from "react-bootstrap/Button";
 import AddPackage from "../components/AddPackage";
+import { toast } from "react-toastify";
+
 const Packages = () => {
-  const [packages, setPackage] = useState([]);
+  const [packages, setPackages] = useState([]);
+  const [editingPackage, setEditingPackage] = useState(null);
+  const [updatedata, setupdatedata] = useState();
+  const [uId, setUid] = useState();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleEdit = () => {};
-  const handleDelete = () => {};
+  const handleEdit = (packageId, packageItem) => {
+    console.log(packageId);
+    setupdatedata(packageItem);
+    setEditingPackage(true);
+    setUid(packageId);
+    console.log("dataup", packageItem);
+    handleShow();
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      alert(id);
+      const response = await axios.delete(
+        `http://localhost:2000/api/package/deletePackage/${id}`
+      );
+
+      console.log("Record Deleted:", id);
+      console.log(response);
+
+      toast.success("Delete Record Successfully");
+    } catch (error) {
+      console.error("Error deleting record:", error);
+      toast.error("Error deleting record");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await packageDetail();
         console.log("Received data:", data);
-        setPackage(data);
-        // setPackage(data);
+        setPackages(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
+
   return (
     <>
-      {/* <h1>Packges</h1> */}
       <Button
         variant="primary"
         onClick={handleShow}
         style={{ display: "flex", margin: "20px" }}
       >
-        <i class="bi bi-plus-circle-dotted"></i>
+        <i className="bi bi-plus-circle-dotted"></i>
         Add Record
       </Button>
-      <AddPackage show={show} handleClose={handleClose} />
-      <div class="table-responsive container">
-        <table class="table">
+      <AddPackage
+        show={show}
+        handleClose={handleClose}
+        editingPackage={editingPackage}
+        handleEdit={handleEdit}
+        updatedata={updatedata}
+        id={uId}
+        /*   refreshTable={fetchData} */
+      />
+      <div className="table-responsive container">
+        <table className="table">
           <thead>
-            <tr class="table-info">
+            <tr className="table-info">
               <th scope="col">Image</th>
               <th scope="col">Name</th>
               <th scope="col">Destination</th>
@@ -55,11 +91,12 @@ const Packages = () => {
             </tr>
           </thead>
           <tbody>
-            {packages.data?.map((packageItem, index) => (
+            {packages.data?.map((packageItem) => (
               <tr key={packageItem._id}>
                 <td>
                   <img
                     src={packageItem.imageUrl}
+                    alt="Package"
                     style={{ maxWidth: "100px", maxHeight: "100px" }}
                   />
                 </td>
@@ -76,15 +113,13 @@ const Packages = () => {
                 <td style={{ display: "flex", gap: "10px" }}>
                   <Button
                     variant="primary"
-                    type="submit"
-                    onClick={() => handleEdit(packageItem._id)}
+                    onClick={() => handleEdit(packageItem._id, packageItem)}
                   >
                     Update
                   </Button>
                   <Button
                     variant="danger"
-                    type="submit"
-                    onClick={() => handleDelete}
+                    onClick={() => handleDelete(packageItem._id)}
                   >
                     Delete
                   </Button>

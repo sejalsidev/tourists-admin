@@ -1,21 +1,31 @@
-import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import TextField from "@mui/material/TextField";
-
 import { Grid, Paper, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { postPackage } from "../servicer/package";
+import { postPackage, updatePackage } from "../servicer/package";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
-import { Margin } from "@mui/icons-material";
-const AddPackage = ({ show, handleClose }) => {
+import dayjs from "dayjs";
+const AddPackage = ({
+  show,
+  handleClose,
+  editingPackage,
+  setEditingPackage,
+  updatedata,
+  id,
+  refreshTable,
+}) => {
+  console.log(editingPackage, "----------ibuhiuyn");
+  console.log(
+    updatedata,
+    "updatedataupdatedataupdatedataupdatedataupdatedataupdatedataupdatedataupdatedataupdatedata"
+  );
   const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
     clipPath: "inset(50%)",
@@ -46,7 +56,9 @@ const AddPackage = ({ show, handleClose }) => {
       <ToastContainer />
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Packages</Modal.Title>
+          <Modal.Title>
+            {editingPackage ? "Update Package" : "Add Package"}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Grid container justifyContent="center">
@@ -63,30 +75,61 @@ const AddPackage = ({ show, handleClose }) => {
                   <Formik
                     initialValues={{
                       image: null,
-                      name: "",
-                      dest: "",
-                      dura: "",
-                      desc: "",
-                      ldesc: "",
-                      day: "",
-                      mpeople: "",
-                      mage: "",
-                      date: null,
-                      price: "",
+                      name:
+                        editingPackage && updatedata ? updatedata?.name : "",
+                      dest:
+                        editingPackage && updatedata
+                          ? updatedata.destination
+                          : "",
+                      dura:
+                        editingPackage && updatedata ? updatedata.duration : "",
+                      desc:
+                        editingPackage && updatedata
+                          ? updatedata.description
+                          : "",
+                      ldesc:
+                        editingPackage && updatedata
+                          ? updatedata.longDescription
+                          : "",
+                      day: editingPackage && updatedata ? updatedata.day : "",
+                      mpeople:
+                        editingPackage && updatedata
+                          ? updatedata.maxPeople
+                          : "",
+                      mage:
+                        editingPackage && updatedata ? updatedata.minAge : "",
+                      date:
+                        editingPackage && updatedata
+                          ? dayjs(updatedata.date)
+                          : null,
+                      price:
+                        editingPackage && updatedata ? updatedata.price : "",
                     }}
                     validationSchema={validationSchema}
                     onSubmit={async (values) => {
                       console.log(values);
 
                       try {
-                        console.log("dadadadad");
-                        const response = await postPackage(values);
-                        console.log("Package added successfully:", response);
-                        toast.success("Package added successfully!");
+                        const response = editingPackage
+                          ? await updatePackage(id, values)
+                          : await postPackage(values);
+                        console.log(
+                          "Package added/updated successfully:",
+                          response
+                        );
+                        toast.success(
+                          `Package ${
+                            editingPackage ? "updated" : "added"
+                          } successfully!`
+                        );
+                        handleClose();
+                        refreshTable();
                       } catch (error) {
-                        console.error("Error adding package:", error);
+                        setEditingPackage(false);
                         toast.error(
-                          "Error adding package. Please try again later."
+                          `Error ${
+                            editingPackage ? "updating" : "adding"
+                          } package. Please try again later.`
                         );
                       }
                     }}
@@ -235,7 +278,7 @@ const AddPackage = ({ show, handleClose }) => {
                               as={TextField}
                               id="mpeople"
                               name="mpeople"
-                              type="number"
+                              type="text"
                               label="Max People"
                               sx={{ marginBottom: "10px" }}
                             />
@@ -250,7 +293,7 @@ const AddPackage = ({ show, handleClose }) => {
                               as={TextField}
                               id="mage"
                               name="mage"
-                              type="number"
+                              type="text"
                               label="Max Age"
                               sx={{ marginBottom: "10px" }}
                             />
@@ -263,12 +306,13 @@ const AddPackage = ({ show, handleClose }) => {
                             </label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DatePicker
-                                sx={{ marginBottom: "10px" }}
-                                name="date"
                                 value={formik.values.date}
                                 onChange={(date) =>
                                   formik.setFieldValue("date", date)
                                 }
+                                renderInput={(params) => (
+                                  <TextField {...params} />
+                                )}
                               />
                             </LocalizationProvider>
                             <ErrorMessage name="date" component="div" />
@@ -294,7 +338,7 @@ const AddPackage = ({ show, handleClose }) => {
                               variant="primary"
                               size="large"
                             >
-                              Submit
+                              {editingPackage ? "Update" : "Submit"}
                             </Button>
                           </Grid>
                         </Grid>

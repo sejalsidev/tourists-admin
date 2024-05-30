@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { userDetail } from "../servicer/userDetail";
-import {
-  MDBTable,
-  MDBTableHead,
-  MDBTableBody,
-  MDBBtn,
-  MDBContainer,
-} from "mdb-react-ui-kit";
+import { MDBTable, MDBTableHead, MDBTableBody, MDBBtn } from "mdb-react-ui-kit";
 import axios from "axios";
 
 const UserDetail = () => {
@@ -77,7 +71,7 @@ const UserDetail = () => {
                 <td>
                   <MDBBtn
                     className="me-1"
-                    color="danger "
+                    color="danger"
                     onClick={() => handleDelete(user._id)}
                   >
                     Delete
