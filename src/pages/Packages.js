@@ -63,6 +63,7 @@ const Packages = () => {
         <i className="bi bi-plus-circle-dotted"></i>
         Add Record
       </Button>
+
       <AddPackage
         show={show}
         handleClose={handleClose}
@@ -72,7 +73,8 @@ const Packages = () => {
         id={uId}
         /*   refreshTable={fetchData} */
       />
-      <div className="table-responsive container">
+
+      <div className="table-responsive">
         <table className="table">
           <thead>
             <tr className="table-info">
@@ -81,9 +83,9 @@ const Packages = () => {
               <th scope="col">Destination</th>
               <th scope="col">Duration</th>
               <th scope="col">Description</th>
-              <th scope="col">Long Description</th>
               <th scope="col">Day</th>
               <th scope="col">Max People</th>
+              <th scope="col">Long Description</th>
               <th scope="col">Min Age</th>
               <th scope="col">Price</th>
               <th scope="col">Date</th>
@@ -103,10 +105,34 @@ const Packages = () => {
                 <td>{packageItem.name}</td>
                 <td>{packageItem.destination}</td>
                 <td>{packageItem.duration}</td>
-                <td>{packageItem.description}</td>
-                <td>{packageItem.longDescription}</td>
+                <td
+                  className="ellipsis"
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    width: "100px",
+                    display: "inline-block",
+                    border: "0.1rem solid #000000",
+                  }}
+                >
+                  {packageItem.description}
+                </td>
                 <td>{packageItem.day}</td>
                 <td>{packageItem.maxPeople}</td>
+                <td
+                  className="ellipsis"
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                    display: "inline-block",
+                    width: "200px",
+                    border: "1px solid #000000",
+                  }}
+                >
+                  {packageItem.longDescription}
+                </td>
                 <td>{packageItem.minAge}</td>
                 <td>{packageItem.price}</td>
                 <td>{packageItem.date}</td>

@@ -13,14 +13,13 @@ const ContactPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      alert(id);
+      // alert(id);
+      console.log("id=======",id);
       const response = await axios.delete(
         `http://localhost:2000/api/contact/deleteDetail/${id}`
       );
-
       console.log("Record Deleted:", id);
       console.log(response);
-
       toast.success("Delete soft Record Successfully");
     } catch (error) {
       console.error("Error deleting record:", error);
@@ -73,6 +72,7 @@ const ContactPage = () => {
                 <td>{contactItem.phone}</td>
                 <td>{contactItem.message}</td>
                 <td>
+                  {console.log("contactItem._idcontactItem._idcontactItem._idcontactItem._id",contactItem._id)}
                   <Button
                     type="submit"
                     variant="danger"

@@ -30,7 +30,9 @@
 .App-link {
   color: #61dafb;
 }
-
+tr{
+  border-bottom: 1px solid gainsboro !important;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

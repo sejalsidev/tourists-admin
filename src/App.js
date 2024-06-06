@@ -15,6 +15,7 @@ import UserDetail from "./pages/UserDetail";
 import Protected from "./components/Protected";
 import AddPackage from "./components/AddPackage";
 import PackForm from "./components/packForm";
+import Slider from "./pages/Slider";
 function App() {
   let Navigator = useNavigate();
   return (
@@ -30,11 +31,16 @@ function App() {
             path="booking"
             element={<Protected Component={Booking} />}
           ></Route>
+          <Route
+            path="slider"
+            element={<Protected Component={Slider} />}
+          ></Route>
           <Route path="Contact" element={<Contactpage />}></Route>
           <Route path="destination" element={<Destination />}></Route>
           <Route path="packages" element={<Packages />}></Route>
           <Route path="*" element={<Navigator to="UserDetail" />}></Route>
           <Route path="addpackage" element={<AddPackage />}></Route>
+          <Route path="slider" element={<Slider />}></Route>
           <Route path="form" element={<PackForm />}></Route>
         </Route>
       </Routes>

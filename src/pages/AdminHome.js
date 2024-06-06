@@ -6,7 +6,9 @@ import Inventory2Icon from "@mui/icons-material/Inventory2";
 import FmdGoodOutlinedIcon from "@mui/icons-material/FmdGoodOutlined";
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import LibraryBooksOutlinedIcon from "@mui/icons-material/LibraryBooksOutlined";
+import TuneIcon from "@mui/icons-material/Tune";
 import { Navbar } from "react-bootstrap";
+
 import "./sidebar.css";
 
 const AdminHome = () => {
@@ -79,6 +81,14 @@ const AdminHome = () => {
                   {" "}
                   <LibraryBooksOutlinedIcon sx={{ marginRight: "25px" }} />
                   Booking
+                </NavLink>
+              </MenuItem>
+
+              <MenuItem sx={{ display: "flex", alignItems: "center" }}>
+                <NavLink to={"Slider"}>
+                  {" "}
+                  <TuneIcon sx={{ marginRight: "35px" }} />
+                  Slider
                 </NavLink>
               </MenuItem>
             </Menu>
