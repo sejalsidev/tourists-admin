@@ -12,3 +12,4 @@ export const userDetail = async () => {
     console.error("Error fetching data:", error);
   }
 };
+        

@@ -91,6 +91,13 @@ const AdminHome = () => {
                   Slider
                 </NavLink>
               </MenuItem>
+              <MenuItem sx={{ display: "flex", alignItems: "center" }}>
+                <NavLink to={"Guide"}>
+                  {" "}
+                  <TuneIcon sx={{ marginRight: "35px" }} />
+                  Guide
+                </NavLink>
+              </MenuItem>
             </Menu>
           </ProSidebar>{" "}
         </div>

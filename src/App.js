@@ -16,12 +16,14 @@ import Protected from "./components/Protected";
 import AddPackage from "./components/AddPackage";
 import PackForm from "./components/packForm";
 import Slider from "./pages/Slider";
+import Guide from "./pages/Guide";
+import { Component } from "react";
 function App() {
   let Navigator = useNavigate();
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Protected Component={Login} />}></Route>
         <Route path="/" element={<Protected Component={AdminHome} />}>
           <Route
             path="UserDetail"
@@ -41,6 +43,7 @@ function App() {
           <Route path="*" element={<Navigator to="UserDetail" />}></Route>
           <Route path="addpackage" element={<AddPackage />}></Route>
           <Route path="slider" element={<Slider />}></Route>
+          <Route path="guide" element={<Guide />}></Route>
           <Route path="form" element={<PackForm />}></Route>
         </Route>
       </Routes>

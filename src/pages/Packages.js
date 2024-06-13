@@ -4,6 +4,7 @@ import { packageDetail } from "../servicer/package";
 import Button from "react-bootstrap/Button";
 import AddPackage from "../components/AddPackage";
 import { toast } from "react-toastify";
+import { Modal } from "react-bootstrap";
 
 const Packages = () => {
   const [packages, setPackages] = useState([]);
@@ -11,8 +12,15 @@ const Packages = () => {
   const [updatedata, setupdatedata] = useState();
   const [uId, setUid] = useState();
   const [show, setShow] = useState(false);
+
   const handleClose = () => setShow(false);
+  const [selectPackage, setSelectPackage] = useState(null);
   const handleShow = () => setShow(true);
+
+  const handleShow10 = (selectPackage) => {
+    setSelectPackage(selectPackage);
+    setShow(true);
+  };
 
   const handleEdit = (packageId, packageItem) => {
     console.log(packageId);
@@ -149,11 +157,50 @@ const Packages = () => {
                   >
                     Delete
                   </Button>
+                  {/* <Button
+                    variant="success"
+                    onClick={() => handleShow(packageItem)}
+                  >
+                    Show
+                  </Button> */}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {selectPackage && (
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Package Details</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                <strong>Name:</strong> {selectPackage.name}
+              </p>
+              <p>
+                <strong>Destination:</strong> {selectPackage.destination}
+              </p>
+              <p>
+                <strong>Duration:</strong> {selectPackage.duration}
+              </p>
+              <p>
+                <strong>Day:</strong> {selectPackage.day}
+              </p>
+              <p>
+                <strong>Max People:</strong> {selectPackage.minAge}
+              </p>
+              <p>
+                <strong>Long Description:</strong>{" "}
+                {selectPackage.longDescription}
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
       </div>
     </>
   );
